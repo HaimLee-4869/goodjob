@@ -2,9 +2,10 @@ const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true, index: true },
-  password: { type: String, required: true }, // 실제 과제 시 Base64나 hashing 필요
+  password: { type: String, required: true }, // Base64 인코딩된 비밀번호
   name: { type: String, required: true },
-  role: { type: String, default: 'user' }
+  role: { type: String, default: 'user' },
+  lastLoginAt: { type: Date } // 로그인 시간
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', UserSchema);
