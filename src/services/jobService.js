@@ -11,14 +11,23 @@ async function getJobs({ page, limit, location, experience, stacks, keyword, sor
   if (stacks) {
     // stacks 파라미터를 콤마로 구분된 문자열이라 가정
     const stackArray = stacks.split(',').map(s => s.trim());
-    query.stacks = { $all: stackArray }; // 모든 스택을 포함하는 공고
+    query.stacks = { $all: stackArray };
   }
 
+  // 회사명 검색 포함한 keyword 검색 로직
   if (keyword) {
+    // 1. 키워드를 만족하는 회사 찾기
+    const companies = await Company.find({ 
+      name: { $regex: keyword, $options: 'i' } 
+    }, { _id: 1 }); // 회사의 _id만 필요
+    const companyIds = companies.map(c => c._id);
+
+    // 2. 기존 $or 조건에 회사명 검색 조건 추가
+    //    제목, sector 혹은 company_id 일치 시 검색
     query.$or = [
       { title: { $regex: keyword, $options: 'i' } },
-      { sector: { $regex: keyword, $options: 'i' } }
-      // 회사명 기반 검색도 가능하려면 company_id 참조 후 populate나 aggregation 필요
+      { sector: { $regex: keyword, $options: 'i' } },
+      { company_id: { $in: companyIds } } // company_id가 찾은 회사들 중 하나
     ];
   }
 
@@ -28,7 +37,6 @@ async function getJobs({ page, limit, location, experience, stacks, keyword, sor
   let mongooseQuery = Job.find(query).populate('company_id');
 
   if (sort) {
-    // 예: sort=-deadline 형태
     mongooseQuery = mongooseQuery.sort(sort);
   }
 
@@ -73,7 +81,6 @@ async function createJob({ title, company_id, location, experience, stacks }) {
     throw err;
   }
 
-  // company_id 검증
   if (!mongoose.Types.ObjectId.isValid(company_id)) {
     const err = new Error('유효하지 않은 company_id');
     err.statusCode = 400;
