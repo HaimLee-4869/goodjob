@@ -1,17 +1,12 @@
-const { verifyToken } = require('../utils/jwt');
-
-function authMiddleware(req, res, next) {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ status: 'error', message: '토큰이 없습니다', code: 'NO_TOKEN' });
+function adminMiddleware(req, res, next) {
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({
+      status: 'error',
+      message: '관리자 권한이 필요합니다.',
+      code: 'FORBIDDEN'
+    });
   }
-  const token = authHeader.split(' ')[1];
-  const decoded = verifyToken(token);
-  if (!decoded) {
-    return res.status(401).json({ status: 'error', message: '유효하지 않은 토큰', code: 'INVALID_TOKEN' });
-  }
-  req.user = decoded; // { _id, email, role, iat, exp }
   next();
 }
 
-module.exports = authMiddleware;
+module.exports = adminMiddleware;

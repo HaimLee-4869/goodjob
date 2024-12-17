@@ -10,7 +10,9 @@ const JobSchema = new mongoose.Schema({
   학력: String,
   고용형태: String,
   마감일: String,
-  직무분야: String
+  직무분야: String,
+  조회수: { type: Number, default: 0 }, // 조회수 필드 추가
+  기술스택: [{ type: String, index: true }] // 기술스택 배열, 인덱스 적용
 }, { timestamps: true });
 
 module.exports = mongoose.model('Job', JobSchema);
