@@ -44,7 +44,7 @@ const validationMiddleware = require('../middlewares/validationMiddleware');
  *         name: stacks
  *         schema:
  *           type: string
- *         description: 기술스택 필터 (콤마로 구분 ex: node,react)
+ *         description: "기술스택 필터 (콤마로 구분 ex: node,react)"
  *       - in: query
  *         name: keyword
  *         schema:
@@ -54,7 +54,7 @@ const validationMiddleware = require('../middlewares/validationMiddleware');
  *         name: sort
  *         schema:
  *           type: string
- *         description: 정렬 기준 (ex: -deadline)
+ *         description: "정렬 기준 (ex: -deadline)"
  *     responses:
  *       200:
  *         description: 성공

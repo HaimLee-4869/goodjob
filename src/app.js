@@ -4,8 +4,10 @@ const cors = require('cors');
 const connectDB = require('./config/database');
 const authRoutes = require('./routes/authRoutes');
 const jobRoutes = require('./routes/jobRoutes');
+const applicationRoutes = require('./routes/applicationRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 const { swaggerUi, specs } = require('./swagger');
+const bookmarkRoutes = require('./routes/bookmarkRoutes');
 
 const app = express();
 app.use(cors());
@@ -20,6 +22,8 @@ app.get('/', (req, res) => {
 
 app.use('/auth', authRoutes);
 app.use('/jobs', jobRoutes);
+app.use('/applications', applicationRoutes);
+app.use('/bookmarks', bookmarkRoutes);
 
 // Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
