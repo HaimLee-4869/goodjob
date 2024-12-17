@@ -8,6 +8,8 @@ const applicationRoutes = require('./routes/applicationRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 const { swaggerUi, specs } = require('./swagger');
 const bookmarkRoutes = require('./routes/bookmarkRoutes');
+const statsRoutes = require('./routes/statsRoutes');
+
 
 const app = express();
 app.use(cors());
@@ -24,6 +26,7 @@ app.use('/auth', authRoutes);
 app.use('/jobs', jobRoutes);
 app.use('/applications', applicationRoutes);
 app.use('/bookmarks', bookmarkRoutes);
+app.use('/stats', statsRoutes);
 
 // Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
