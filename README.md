@@ -89,7 +89,7 @@ pm2 start src/app.js
 
 1. 크롤러 실행 (로컬): saramin_python.csv 파일 생성
 ```
-node src/crawler/crawler.js
+node src/crawler.js
 ```
 
 2. CSV->MongoDB Import: 크롤링한 공고 데이터를 MongoDB에 삽입.
