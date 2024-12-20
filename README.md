@@ -97,6 +97,13 @@ node src/crawler.js
 node src/crawler/import.js saramin_python.csv
 ```
 
+### 크롤링 관련 파일
+```
+crawled-data.json: 크롤링 데이터 파일
+crawler.js: 크롤링 파일
+import.js: 데이터를 mongodb에 저장
+saramin_python.csv: 크롤링 데이터의 원본 형식
+```
 
 ## API 문서
 
