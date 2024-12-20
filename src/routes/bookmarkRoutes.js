@@ -59,17 +59,17 @@ router.post('/',
  *         name: page
  *         schema:
  *           type: integer
- *         description: 페이지 번호 (기본값: 1)
+ *         description: "페이지 번호 (기본값: 1)"
  *       - in: query
  *         name: limit
  *         schema:
  *           type: integer
- *         description: 페이지 당 개수 (기본값: 20)
+ *         description: "페이지 당 개수 (기본값: 20)"
  *       - in: query
  *         name: sort
  *         schema:
  *           type: string
- *         description: 정렬 기준 (예: -createdAt로 최신순)
+ *         description: "정렬 기준 (예: -createdAt로 최신순)"
  *     responses:
  *       200:
  *         description: 북마크 목록 조회 성공
